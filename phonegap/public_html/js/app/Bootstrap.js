@@ -40,7 +40,7 @@ var Bootstrap = (function() {
         $("#otpVerify").on("click", function() {
             if ($("#otpNumberSecond").val().length > 0) {
                 startLoader();
-                ajaxGetRequest("https://www.cognalys.com/api/v1/otp/confirm/?app_id=" + getData().appId + "&access_token=" + getData().accessToken + "&keymatch=" + getData().response.keymatch + "&otp=" + $("#otpNumberFirst").val() + $("#otpNumberSecond").val(), "json", Bootstrap.otpVerificationSuccess, Bootstrap.otpVerificationFailed);
+                ajaxGetRequest("https://www.cognalys.com/api/v1/otp/confirm/?app_id=" + getData().appId + "&access_token=" + getData().accessToken + "&keymatch=" + keymatch + "&otp=" + $("#otpNumberFirst").val() + $("#otpNumberSecond").val(), "json", Bootstrap.otpVerificationSuccess, Bootstrap.otpVerificationFailed);
             } else {
                 alert("Please Enter OTP");
             }
@@ -49,8 +49,9 @@ var Bootstrap = (function() {
     //Function to handle the OTP Success data
     function otpSuccess(response) {
         stopLoader();
-        debugger;
-        getData().otpData = response;
+        //debugger;
+        keymatch=response.keymatch;
+        //getData().otpData = response;
         if (response.status == "failed") {
             var message = "";
             $.each(response.errors, function(key, value) {
